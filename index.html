@@ -11,9 +11,8 @@
   <style>
     :root {
       --off-white: #FAF6EE;
-      --off-white-pure: #FFFFFF;
       --pastel-green: #D6E8D0;
-      --pastel-green-dark: #A9CCA0;
+      --pastel-green-border: #A3C999;
       --amber: #D97706;
       --amber-bright: #F59E0B;
       --amber-soft: #FEF3C7;
@@ -42,7 +41,7 @@
       user-select: none;
     }
 
-    /* Full-bleed wrapper that stretches to fill 100% of the widget */
+    /* Edge-to-edge full-bleed container */
     .widget-shell {
       width: 100%;
       height: 100%;
@@ -50,19 +49,19 @@
       flex-direction: column;
       justify-content: space-between;
       background-color: var(--off-white);
-      padding: 10px;
-      gap: 8px;
+      padding: 8px;
+      gap: 6px;
     }
 
-    /* Top Header Section */
+    /* Header Table Card */
     .header-box {
       background-color: var(--pastel-green);
-      border: 2px solid var(--pastel-green-dark);
-      border-radius: 14px;
-      padding: 10px 12px;
+      border: 2px solid var(--pastel-green-border);
+      border-radius: 12px;
+      padding: 8px 10px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
       flex-shrink: 0;
     }
 
@@ -76,28 +75,27 @@
     .day-tag {
       background-color: var(--amber);
       color: var(--off-white);
-      font-size: 0.68rem;
-      letter-spacing: 0.05em;
+      font-size: 0.65rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      padding: 4px 8px;
-      border-radius: 8px;
+      padding: 3px 8px;
+      border-radius: 6px;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
     }
 
     .header-actions {
       display: flex;
-      gap: 6px;
+      gap: 5px;
     }
 
     .action-btn {
       background-color: var(--off-white);
       color: var(--text-main);
       border: 2px solid var(--amber);
-      font-size: 0.68rem;
-      padding: 3px 8px;
-      border-radius: 8px;
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 6px;
       cursor: pointer;
     }
 
@@ -107,106 +105,108 @@
     }
 
     .routine-title {
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: var(--text-main);
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .routine-subtitle {
-      font-size: 0.74rem;
+      font-size: 0.7rem;
       color: var(--text-sub);
-      line-height: 1.25;
+      line-height: 1.2;
     }
 
-    /* Scrollable / Stretchable Table-Like Steps List */
+    /* Steps List Container */
     .steps-table {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 6px;
       overflow-y: auto;
-      padding-right: 2px;
     }
 
     .steps-table::-webkit-scrollbar {
-      width: 4px;
+      width: 0px;
     }
 
-    .steps-table::-webkit-scrollbar-thumb {
-      background: var(--pastel-green-dark);
-      border-radius: 4px;
-    }
-
-    /* Individual Step Row */
+    /* Individual Table-Like Step Row */
     .step-row {
       flex: 1;
-      min-height: 54px;
+      min-height: 52px;
       background-color: var(--pastel-green);
-      border: 2px solid var(--pastel-green-dark);
+      border: 2px solid var(--pastel-green-border);
       border-radius: 12px;
-      padding: 8px 10px;
+      padding: 7px 10px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       cursor: pointer;
-      transition: transform 0.1s ease, opacity 0.15s ease;
+      transition: transform 0.08s ease, opacity 0.15s ease;
     }
 
     .step-row:active {
-      transform: scale(0.99);
+      transform: scale(0.985);
     }
 
-    /* Special Amber Highlight Row for Vitamin C & E */
+    /* Amber Highlight Card for Supplements */
     .step-row.supplement-row {
       background-color: var(--amber-soft);
       border: 2px solid var(--amber-bright);
     }
 
     .step-row.completed {
-      opacity: 0.6;
+      opacity: 0.58;
     }
 
     .step-row.completed .step-name {
       text-decoration: line-through;
     }
 
-    /* Custom Amber Checkbox / Icon Box */
-    .check-box {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
+    /* Product Type Icon Tile */
+    .step-icon-tile {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
       background-color: var(--off-white);
-      border: 2.5px solid var(--amber);
+      border: 2px solid var(--amber);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      color: var(--off-white);
-      font-size: 0.9rem;
+      color: var(--amber);
     }
 
-    .step-row.completed .check-box {
-      background-color: var(--amber);
+    .step-row.supplement-row .step-icon-tile {
+      background-color: var(--amber-bright);
       color: var(--off-white);
+      border-color: var(--amber);
     }
 
+    .step-icon-tile svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.2;
+    }
+
+    /* Text Content inside Row */
     .step-info {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 2px;
+      min-width: 0;
     }
 
     .step-name {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 800;
       color: var(--text-main);
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .step-desc {
-      font-size: 0.72rem;
+      font-size: 0.69rem;
       color: var(--text-sub);
       line-height: 1.2;
     }
@@ -215,26 +215,47 @@
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     .amber-badge {
       background-color: var(--amber);
       color: var(--off-white);
-      font-size: 0.65rem;
-      padding: 2px 7px;
-      border-radius: 6px;
+      font-size: 0.62rem;
+      padding: 2px 6px;
+      border-radius: 5px;
       display: inline-flex;
       align-items: center;
       gap: 3px;
     }
 
-    /* Bottom Navigation Bar */
+    /* Right-side Checkbox */
+    .check-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background-color: var(--off-white);
+      border: 2.5px solid var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: transparent;
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    .step-row.completed .check-box {
+      background-color: var(--amber);
+      color: var(--off-white);
+    }
+
+    /* Bottom Day & AM/PM Bar */
     .footer-bar {
       background-color: var(--pastel-green);
-      border: 2px solid var(--pastel-green-dark);
+      border: 2px solid var(--pastel-green-border);
       border-radius: 12px;
-      padding: 6px 8px;
+      padding: 5px 7px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -244,7 +265,7 @@
 
     .days-nav {
       display: flex;
-      gap: 3px;
+      gap: 2px;
       flex: 1;
       justify-content: space-between;
     }
@@ -255,10 +276,11 @@
       background: transparent;
       border: none;
       color: var(--text-main);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       padding: 5px 2px;
-      border-radius: 7px;
+      border-radius: 6px;
       cursor: pointer;
+      position: relative;
     }
 
     .day-btn.active {
@@ -266,11 +288,27 @@
       color: var(--off-white);
     }
 
+    .day-btn.today-marker::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--amber);
+    }
+
+    .day-btn.active.today-marker::after {
+      background-color: var(--off-white);
+    }
+
     .ampm-toggle {
       display: flex;
       background-color: var(--off-white);
       border: 2px solid var(--amber);
-      border-radius: 8px;
+      border-radius: 7px;
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -279,7 +317,7 @@
       border: none;
       background: transparent;
       color: var(--text-main);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       padding: 4px 8px;
       cursor: pointer;
     }
@@ -292,20 +330,20 @@
 </head>
 <body>
   <div class="widget-shell">
-    <!-- Header -->
+    <!-- Top Header -->
     <div class="header-box">
       <div class="header-top">
         <span class="day-tag" id="dayBanner">LOADING...</span>
         <div class="header-actions">
           <button class="action-btn active" id="liveAutoBtn" onclick="enableLiveAuto()">● Live Auto</button>
-          <button class="action-btn" onclick="resetChecks()">Reset</button>
+          <button class="action-btn" onclick="resetCurrentViewChecks()">Reset View</button>
         </div>
       </div>
       <div class="routine-title" id="routineTitle">Skincare & Supplements</div>
       <div class="routine-subtitle" id="routineSubtitle">Daily barrier & antioxidant protocol</div>
     </div>
 
-    <!-- Steps Table -->
+    <!-- Steps List -->
     <div class="steps-table" id="stepsContainer"></div>
 
     <!-- Footer Controls -->
@@ -322,36 +360,51 @@
     const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const FULL_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+    // Custom Vector Icons for each product category
+    const ICONS = {
+      vitamin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="8" rx="4" transform="rotate(-35 12 12)"/><line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/></svg>`,
+      cleanser: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`,
+      serum: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4v3h-4z"/><path d="M8 5h8v3H8z"/><path d="M7 8h10l1 12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L7 8z"/><line x1="12" y1="12" x2="12" y2="17"/></svg>`,
+      acid: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v3H9z"/><path d="M7 6h10l1.5 13a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2L7 6z"/><path d="M12 11l-2 3h4l-2 3"/></svg>`,
+      patch: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="6" x2="12" y2="6.01"/><line x1="12" y1="18" x2="12" y2="18.01"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/></svg>`,
+      aloe: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9z"/><path d="M12 22c-4.97 0-9-4.03-9-9 4.97 0 9 4.03 9 9z"/><path d="M12 22V2"/></svg>`,
+      spf: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>`
+    };
+
     const ROUTINES = {
       AM: {
         tag: "MORNING SHIELD",
         title: "Antioxidant & Sebum Control AM",
-        subtitle: "Internal Vitamin C + E synergy & lightweight barrier protection",
+        subtitle: "Vitamin C + E synergy & lightweight barrier protection",
         steps: [
           {
-            id: "supp-am",
+            key: "vit_ce_am",
+            icon: "vitamin",
             isSupplement: true,
-            name: "💊 Take Vitamin C + Vitamin E",
-            desc: "Eat with breakfast containing healthy fats. Vitamin C regenerates Vitamin E & boosts UV defense.",
-            badge: "⚡ Peak Absorption Time (8:00–10:00 AM)"
+            name: "Take Vitamin C + Vitamin E",
+            desc: "Take with breakfast fats. Vitamin C regenerates Vitamin E & boosts UV defense.",
+            badge: "⚡ Peak Window (With Breakfast)"
           },
           {
-            id: "am-1",
-            name: "1. Gentle Cleanser & Pat Bone-Dry",
-            desc: "Wash away overnight oil and pat gently with a clean tissue.",
+            key: "cleanse_am",
+            icon: "cleanser",
+            name: "1. Gentle Wash & Pat Bone-Dry",
+            desc: "Remove overnight sebum and pat dry with a clean tissue.",
             badge: null
           },
           {
-            id: "am-2",
+            key: "niacinamide_am",
+            icon: "serum",
             name: "2. Minimalist Niacinamide 10%",
-            desc: "Apply 2–3 drops evenly across face to regulate daytime sebum & pores.",
+            desc: "Apply 2–3 drops across face to control daytime oil & tighten pores.",
             badge: "⏱ Wait 2 mins to absorb"
           },
           {
-            id: "am-3",
-            name: "3. Aloe Vera Gel + Broad-Spectrum SPF",
-            desc: "Lock in light hydration, then seal with sunscreen before stepping out.",
-            badge: "☀️ UV Shield Required"
+            key: "aloe_spf_am",
+            icon: "spf",
+            name: "3. Aloe Vera Gel + Sunscreen",
+            desc: "Apply light aloe layer, then seal with broad-spectrum SPF.",
+            badge: "☀️ UV Shield"
           }
         ]
       },
@@ -362,35 +415,40 @@
           subtitle: "Calm acne inflammation & balance oil without over-exfoliating",
           steps: [
             {
-              id: "pm-sun-1",
+              key: "cleanse_sun_pm",
+              icon: "cleanser",
               name: "1. Wash & Pat 100% Bone-Dry",
-              desc: "Press a clean tissue on any oily spots or patches so skin stays dry.",
+              desc: "Press a clean tissue on oily spots so skin stays completely dry.",
               badge: null
             },
             {
-              id: "pm-sun-2",
-              name: "2. Hydrocolloid Tape (If Needed)",
-              desc: "Apply onto active whiteheads first before any slippery serum.",
+              key: "patch_sun_pm",
+              icon: "patch",
+              name: "2. Hydrocolloid Patch (If Needed)",
+              desc: "Stick onto active whiteheads first before applying slippery serums.",
               badge: null
             },
             {
-              id: "pm-sun-3",
+              key: "niacinamide_sun_pm",
+              icon: "serum",
               name: "3. Minimalist Niacinamide 10%",
-              desc: "Apply 2–3 drops around any tape. Pat gently and let settle.",
+              desc: "Apply 2–3 drops around patches. Pat gently and let settle.",
               badge: "⏱ Wait 3 mins to absorb"
             },
             {
-              id: "pm-sun-4",
+              key: "aloe_sun_pm",
+              icon: "aloe",
               name: "4. Aloe Vera Gel (5mm Layer)",
               desc: "Lock in water hydration overnight so oil glands stay calm.",
               badge: null
             },
             {
-              id: "supp-pm-check",
+              key: "vit_ce_backup_sun",
+              icon: "vitamin",
               isSupplement: true,
-              name: "💊 Vitamin C + E (Missed AM Check)",
-              desc: "If you skipped breakfast supplements, take them now with dinner.",
-              badge: "🔄 Backup Window"
+              name: "Vitamin C + E (If Missed in AM)",
+              desc: "Skipped morning dose? Take with dinner now.",
+              badge: "🔄 Backup Dose Check"
             }
           ]
         },
@@ -400,29 +458,33 @@
           subtitle: "Unclog deep congestion & prevent new breakouts",
           steps: [
             {
-              id: "pm-bha-1",
-              name: "1. Cleanser & Pat 100% Bone-Dry",
-              desc: "Damp skin makes acids penetrate too fast—pat completely dry first.",
+              key: "cleanse_bha_pm",
+              icon: "cleanser",
+              name: "1. Wash & Pat 100% Bone-Dry",
+              desc: "Damp skin makes acids penetrate too fast—pat completely dry.",
               badge: "⏱ Wait 2 mins until dry"
             },
             {
-              id: "pm-bha-2",
-              name: "2. Salicylic Acid 2% (BHA)",
-              desc: "Apply 2–3 drops on T-zone and congested areas. Avoid eye corners.",
+              key: "bha_serum_pm",
+              icon: "acid",
+              name: "2. Salicylic Acid 2% Serum",
+              desc: "Apply 2–3 drops on congested T-zone & spots. Avoid eye corners.",
               badge: "⏱ Wait 10 mins for BHA action"
             },
             {
-              id: "pm-bha-3",
-              name: "3. Soothing Aloe Vera Gel Layer",
-              desc: "Apply a generous layer to cool and hydrate post-exfoliation.",
+              key: "aloe_bha_pm",
+              icon: "aloe",
+              name: "3. Soothing Aloe Vera Gel",
+              desc: "Apply a calming layer to rehydrate skin after BHA exfoliation.",
               badge: null
             },
             {
-              id: "supp-pm-check",
+              key: "vit_ce_backup_bha",
+              icon: "vitamin",
               isSupplement: true,
-              name: "💊 Vitamin C + E (Missed AM Check)",
-              desc: "Confirm you took your morning Vitamin C + E dose (take with dinner if missed).",
-              badge: "🔄 Daily Check"
+              name: "Vitamin C + E (If Missed in AM)",
+              desc: "Skipped morning dose? Take with dinner now.",
+              badge: "🔄 Backup Dose Check"
             }
           ]
         },
@@ -432,91 +494,121 @@
           subtitle: "Strengthen skin barrier & fade post-acne marks",
           steps: [
             {
-              id: "pm-bar-1",
+              key: "cleanse_bar_pm",
+              icon: "cleanser",
               name: "1. Gentle Wash & Pat Bone-Dry",
-              desc: "Remove sweat, sunscreen, and pollution thoroughly.",
+              desc: "Wash off sweat, dust, and sunscreen thoroughly.",
               badge: null
             },
             {
-              id: "pm-bar-2",
+              key: "patch_bar_pm",
+              icon: "patch",
               name: "2. Hydrocolloid Patch (If Active Spots)",
-              desc: "Stick onto clean, dry blemishes before applying serums.",
+              desc: "Apply onto clean, dry blemishes before serum.",
               badge: null
             },
             {
-              id: "pm-bar-3",
+              key: "niacinamide_bar_pm",
+              icon: "serum",
               name: "3. Minimalist Niacinamide 10%",
-              desc: "Apply 2–3 drops evenly to calm redness and repair barrier lipids.",
+              desc: "Apply 2–3 drops evenly to calm redness & repair barrier.",
               badge: "⏱ Wait 3 mins to absorb"
             },
             {
-              id: "pm-bar-4",
+              key: "aloe_bar_pm",
+              icon: "aloe",
               name: "4. Aloe Vera Gel Seal",
-              desc: "Smooth over face to lock in overnight moisture.",
+              desc: "Smooth over face to lock in overnight hydration.",
               badge: null
             },
             {
-              id: "supp-pm-check",
+              key: "vit_ce_backup_bar",
+              icon: "vitamin",
               isSupplement: true,
-              name: "💊 Vitamin C + E (Missed AM Check)",
-              desc: "Confirm you took your morning Vitamin C + E dose (take with dinner if missed).",
-              badge: "🔄 Daily Check"
+              name: "Vitamin C + E (If Missed in AM)",
+              desc: "Skipped morning dose? Take with dinner now.",
+              badge: "🔄 Backup Dose Check"
             }
           ]
         }
       }
     };
 
-    let currentDay = new Date().getDay();
-    let currentPeriod = new Date().getHours() < 16 ? "AM" : "PM";
+    const STORAGE_KEY = "loop_skincare_v3_isolated_state";
+    let selectedDay = new Date().getDay();
+    let selectedPeriod = new Date().getHours() < 16 ? "AM" : "PM";
     let isLiveAuto = true;
 
-    function getTodayKey() {
-      const d = new Date();
-      return `skincare_checks_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
+    // Calculates the exact YYYY-MM-DD date string for any day index (0-6) in the current week
+    function getDateStringForDayIndex(targetDayIndex) {
+      const now = new Date();
+      const currentDayIndex = now.getDay();
+      const diff = targetDayIndex - currentDayIndex;
+      const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diff);
+      const yyyy = targetDate.getFullYear();
+      const mm = String(targetDate.getMonth() + 1).padStart(2, "0");
+      const dd = String(targetDate.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
     }
 
-    function getSavedChecks() {
+    // Generates a strictly unique ID per Calendar Date + Day + Period + Step Key
+    function getUniqueStepStorageId(dayIndex, period, stepKey) {
+      const dateStr = getDateStringForDayIndex(dayIndex);
+      return `${dateStr}_day${dayIndex}_${period}_${stepKey}`;
+    }
+
+    function loadAllChecks() {
       try {
-        return JSON.parse(localStorage.getItem(getTodayKey())) || {};
-      } catch {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
         return {};
       }
     }
 
-    function toggleStep(stepId) {
-      const checks = getSavedChecks();
-      checks[stepId] = !checks[stepId];
+    function saveAllChecks(stateObj) {
       try {
-        localStorage.setItem(getTodayKey(), JSON.stringify(checks));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
       } catch (e) {}
+    }
+
+    function toggleStep(dayIndex, period, stepKey) {
+      const allChecks = loadAllChecks();
+      const uniqueId = getUniqueStepStorageId(dayIndex, period, stepKey);
+      allChecks[uniqueId] = !allChecks[uniqueId];
+      saveAllChecks(allChecks);
       render();
     }
 
-    function resetChecks() {
-      try {
-        localStorage.removeItem(getTodayKey());
-      } catch (e) {}
+    // Only resets the currently viewed Day + AM/PM routine without wiping other days
+    function resetCurrentViewChecks() {
+      const allChecks = loadAllChecks();
+      const routine = getRoutineData(selectedDay, selectedPeriod);
+      routine.steps.forEach((step) => {
+        const uniqueId = getUniqueStepStorageId(selectedDay, selectedPeriod, step.key);
+        delete allChecks[uniqueId];
+      });
+      saveAllChecks(allChecks);
       render();
     }
 
     function enableLiveAuto() {
       isLiveAuto = true;
       const now = new Date();
-      currentDay = now.getDay();
-      currentPeriod = now.getHours() < 16 ? "AM" : "PM";
+      selectedDay = now.getDay();
+      selectedPeriod = now.getHours() < 16 ? "AM" : "PM";
       render();
     }
 
-    function setDay(dayIndex) {
+    function setDay(dayIdx) {
       isLiveAuto = false;
-      currentDay = dayIndex;
+      selectedDay = dayIdx;
       render();
     }
 
     function setPeriod(period) {
       isLiveAuto = false;
-      currentPeriod = period;
+      selectedPeriod = period;
       render();
     }
 
@@ -528,36 +620,41 @@
     }
 
     function render() {
-      const routine = getRoutineData(currentDay, currentPeriod);
-      const checks = getSavedChecks();
+      const routine = getRoutineData(selectedDay, selectedPeriod);
+      const allChecks = loadAllChecks();
+      const realTodayIndex = new Date().getDay();
 
       // Update Header
       document.getElementById("dayBanner").textContent =
-        `${FULL_DAYS[currentDay].toUpperCase()} ${currentPeriod} • ${routine.tag}`;
+        `${FULL_DAYS[selectedDay].toUpperCase()} ${selectedPeriod} • ${routine.tag}`;
       document.getElementById("routineTitle").textContent = routine.title;
       document.getElementById("routineSubtitle").textContent = routine.subtitle;
+      document.getElementById("liveAutoBtn").classList.toggle("active", isLiveAuto);
 
-      const liveBtn = document.getElementById("liveAutoBtn");
-      liveBtn.classList.toggle("active", isLiveAuto);
-
-      // Render Steps
+      // Render Steps with isolated IDs and SVG Icons
       const container = document.getElementById("stepsContainer");
       container.innerHTML = "";
 
       routine.steps.forEach((step) => {
-        const isDone = !!checks[step.id];
+        const uniqueId = getUniqueStepStorageId(selectedDay, selectedPeriod, step.key);
+        const isDone = Boolean(allChecks[uniqueId]);
+
         const row = document.createElement("div");
         row.className = `step-row ${step.isSupplement ? "supplement-row" : ""} ${isDone ? "completed" : ""}`;
-        row.onclick = () => toggleStep(step.id);
+        row.addEventListener("click", () => toggleStep(selectedDay, selectedPeriod, step.key));
+
+        const iconSvg = ICONS[step.icon] || ICONS.serum;
 
         row.innerHTML = `
-          <div class="check-box">${isDone ? "✓" : ""}</div>
+          <div class="step-icon-tile">${iconSvg}</div>
           <div class="step-info">
             <div class="step-name">${step.name}</div>
             <div class="step-desc">${step.desc}</div>
             ${step.badge ? `<div class="badge-row"><span class="amber-badge">${step.badge}</span></div>` : ""}
           </div>
+          <div class="check-box">${isDone ? "✓" : ""}</div>
         `;
+
         container.appendChild(row);
       });
 
@@ -566,23 +663,25 @@
       daysNav.innerHTML = "";
       DAYS.forEach((dayName, idx) => {
         const btn = document.createElement("button");
-        btn.className = `day-btn ${idx === currentDay ? "active" : ""}`;
+        const isSelected = idx === selectedDay;
+        const isToday = idx === realTodayIndex;
+        btn.className = `day-btn ${isSelected ? "active" : ""} ${isToday ? "today-marker" : ""}`;
         btn.textContent = dayName;
-        btn.onclick = () => setDay(idx);
+        btn.addEventListener("click", () => setDay(idx));
         daysNav.appendChild(btn);
       });
 
       // Update AM/PM Toggle
-      document.getElementById("amBtn").classList.toggle("active", currentPeriod === "AM");
-      document.getElementById("pmBtn").classList.toggle("active", currentPeriod === "PM");
+      document.getElementById("amBtn").classList.toggle("active", selectedPeriod === "AM");
+      document.getElementById("pmBtn").classList.toggle("active", selectedPeriod === "PM");
     }
 
-    // Auto-refresh time check every minute when in Live Auto mode
+    // Keep Live Auto synced with real time
     setInterval(() => {
       if (isLiveAuto) {
         const now = new Date();
-        currentDay = now.getDay();
-        currentPeriod = now.getHours() < 16 ? "AM" : "PM";
+        selectedDay = now.getDay();
+        selectedPeriod = now.getHours() < 16 ? "AM" : "PM";
         render();
       }
     }, 60000);

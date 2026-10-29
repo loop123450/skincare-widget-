@@ -2,25 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#0f1714" />
-  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#FAF6EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Skincare" />
-  <title>Skincare Routine Widget</title>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Skincare & Supplement Widget</title>
   <style>
     :root {
-      --bg: #0f1714;
-      --card: #17231e;
-      --card-border: #263830;
-      --accent: #34d399;
-      --accent-soft: rgba(52, 211, 153, 0.14);
-      --warn: #fbbf24;
-      --warn-soft: rgba(251, 191, 36, 0.14);
-      --text: #f1f5f3;
-      --muted: #8fa69b;
-      --done: #4b6358;
+      --off-white: #FAF6EE;
+      --off-white-pure: #FFFFFF;
+      --pastel-green: #D6E8D0;
+      --pastel-green-dark: #A9CCA0;
+      --amber: #D97706;
+      --amber-bright: #F59E0B;
+      --amber-soft: #FEF3C7;
+      --text-main: #1C1917;
+      --text-sub: #44403C;
     }
 
     * {
@@ -28,551 +26,568 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 700;
     }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      padding: 14px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0;
+      padding: 0;
+      background-color: var(--off-white);
+      color: var(--text-main);
+      overflow: hidden;
+      user-select: none;
     }
 
-    .widget {
+    /* Full-bleed wrapper that stretches to fill 100% of the widget */
+    .widget-shell {
       width: 100%;
-      max-width: 420px;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: var(--off-white);
+      padding: 10px;
+      gap: 8px;
     }
 
-    .header {
+    /* Top Header Section */
+    .header-box {
+      background-color: var(--pastel-green);
+      border: 2px solid var(--pastel-green-dark);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .header-top {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .badge-row {
-      display: flex;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 4px;
+      gap: 6px;
     }
 
-    .time-badge {
-      font-size: 11px;
-      font-weight: 700;
+    .day-tag {
+      background-color: var(--amber);
+      color: var(--off-white);
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .time-badge.bha-night {
-      background: var(--warn-soft);
-      color: var(--warn);
-    }
-
-    .live-dot {
-      font-size: 11px;
-      color: var(--muted);
-      display: flex;
+      padding: 4px 8px;
+      border-radius: 8px;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
 
-    .live-dot::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      display: inline-block;
+    .header-actions {
+      display: flex;
+      gap: 6px;
     }
 
-    h1 {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+    .action-btn {
+      background-color: var(--off-white);
+      color: var(--text-main);
+      border: 2px solid var(--amber);
+      font-size: 0.68rem;
+      padding: 3px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .action-btn.active {
+      background-color: var(--amber-bright);
+      color: var(--off-white);
+    }
+
+    .routine-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .routine-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-sub);
       line-height: 1.25;
     }
 
-    .subtitle {
-      font-size: 12.5px;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .reset-btn {
-      background: #21322b;
-      border: 1px solid var(--card-border);
-      color: var(--text);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 6px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .steps {
+    /* Scrollable / Stretchable Table-Like Steps List */
+    .steps-table {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 9px;
-      margin-top: 12px;
+      gap: 6px;
+      overflow-y: auto;
+      padding-right: 2px;
     }
 
-    .step {
+    .steps-table::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .steps-table::-webkit-scrollbar-thumb {
+      background: var(--pastel-green-dark);
+      border-radius: 4px;
+    }
+
+    /* Individual Step Row */
+    .step-row {
+      flex: 1;
+      min-height: 54px;
+      background-color: var(--pastel-green);
+      border: 2px solid var(--pastel-green-dark);
+      border-radius: 12px;
+      padding: 8px 10px;
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      align-items: center;
+      gap: 10px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: transform 0.1s ease, opacity 0.15s ease;
     }
 
-    .step.completed {
-      opacity: 0.48;
-      background: rgba(0, 0, 0, 0.15);
+    .step-row:active {
+      transform: scale(0.99);
     }
 
-    .checkbox {
-      width: 22px;
-      height: 22px;
-      border-radius: 7px;
-      border: 2px solid var(--accent);
+    /* Special Amber Highlight Row for Vitamin C & E */
+    .step-row.supplement-row {
+      background-color: var(--amber-soft);
+      border: 2px solid var(--amber-bright);
+    }
+
+    .step-row.completed {
+      opacity: 0.6;
+    }
+
+    .step-row.completed .step-name {
+      text-decoration: line-through;
+    }
+
+    /* Custom Amber Checkbox / Icon Box */
+    .check-box {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background-color: var(--off-white);
+      border: 2.5px solid var(--amber);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 1px;
-      font-size: 13px;
-      font-weight: 800;
-      color: #0b1310;
+      color: var(--off-white);
+      font-size: 0.9rem;
     }
 
-    .step.completed .checkbox {
-      background: var(--accent);
+    .step-row.completed .check-box {
+      background-color: var(--amber);
+      color: var(--off-white);
     }
 
-    .step-content {
+    .step-info {
       flex: 1;
-    }
-
-    .step-title {
-      font-size: 14.5px;
-      font-weight: 600;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .step.completed .step-title {
-      text-decoration: line-through;
-      color: var(--muted);
+    .step-name {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
     }
 
     .step-desc {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
-      line-height: 1.35;
+      font-size: 0.72rem;
+      color: var(--text-sub);
+      line-height: 1.2;
     }
 
-    .timer-btn {
-      margin-top: 7px;
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 3px;
+    }
+
+    .amber-badge {
+      background-color: var(--amber);
+      color: var(--off-white);
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 6px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      border: 1px solid rgba(52, 211, 153, 0.3);
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: pointer;
+      gap: 3px;
     }
 
-    .controls {
-      margin-top: 15px;
-      padding-top: 12px;
-      border-top: 1px solid var(--card-border);
+    /* Bottom Navigation Bar */
+    .footer-bar {
+      background-color: var(--pastel-green);
+      border: 2px solid var(--pastel-green-dark);
+      border-radius: 12px;
+      padding: 6px 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 6px;
-      flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
-    .day-pills {
+    .days-nav {
       display: flex;
-      gap: 4px;
+      gap: 3px;
+      flex: 1;
+      justify-content: space-between;
     }
 
-    .pill {
-      background: transparent;
-      border: 1px solid var(--card-border);
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 5px 7px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .pill.active {
-      background: var(--accent);
-      color: #0b1310;
-      border-color: var(--accent);
-    }
-
-    .ampm-toggle {
-      display: flex;
-      background: #0f1714;
-      border-radius: 9px;
-      padding: 2px;
-      border: 1px solid var(--card-border);
-    }
-
-    .ampm-btn {
+    .day-btn {
+      flex: 1;
+      text-align: center;
       background: transparent;
       border: none;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 9px;
+      color: var(--text-main);
+      font-size: 0.7rem;
+      padding: 5px 2px;
       border-radius: 7px;
       cursor: pointer;
     }
 
+    .day-btn.active {
+      background-color: var(--amber);
+      color: var(--off-white);
+    }
+
+    .ampm-toggle {
+      display: flex;
+      background-color: var(--off-white);
+      border: 2px solid var(--amber);
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .ampm-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
     .ampm-btn.active {
-      background: #23352d;
-      color: var(--text);
+      background-color: var(--amber);
+      color: var(--off-white);
     }
   </style>
 </head>
 <body>
-
-<div class="widget">
-  <div class="header">
-    <div>
-      <div class="badge-row">
-        <span id="routineBadge" class="time-badge">LOADING...</span>
-        <span id="liveIndicator" class="live-dot">Live Auto</span>
+  <div class="widget-shell">
+    <!-- Header -->
+    <div class="header-box">
+      <div class="header-top">
+        <span class="day-tag" id="dayBanner">LOADING...</span>
+        <div class="header-actions">
+          <button class="action-btn active" id="liveAutoBtn" onclick="enableLiveAuto()">● Live Auto</button>
+          <button class="action-btn" onclick="resetChecks()">Reset</button>
+        </div>
       </div>
-      <h1 id="routineTitle">Skincare Routine</h1>
-      <p id="routineSubtitle" class="subtitle"></p>
+      <div class="routine-title" id="routineTitle">Skincare & Supplements</div>
+      <div class="routine-subtitle" id="routineSubtitle">Daily barrier & antioxidant protocol</div>
     </div>
-    <button class="reset-btn" id="syncNowBtn">Sync Now</button>
+
+    <!-- Steps Table -->
+    <div class="steps-table" id="stepsContainer"></div>
+
+    <!-- Footer Controls -->
+    <div class="footer-bar">
+      <div class="days-nav" id="daysNav"></div>
+      <div class="ampm-toggle">
+        <button class="ampm-btn" id="amBtn" onclick="setPeriod('AM')">AM</button>
+        <button class="ampm-btn" id="pmBtn" onclick="setPeriod('PM')">PM</button>
+      </div>
+    </div>
   </div>
 
-  <div id="stepsContainer" class="steps"></div>
+  <script>
+    const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const FULL_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  <div class="controls">
-    <div class="day-pills" id="dayPills"></div>
-    <div class="ampm-toggle">
-      <button class="ampm-btn" id="amBtn">AM</button>
-      <button class="ampm-btn" id="pmBtn">PM</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const FULL_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  // Mon (1), Wed (3), Fri (5) are Salicylic Acid 2% nights
-  const BHA_DAYS = [1, 3, 5];
-
-  let selectedDay = 0;
-  let selectedPeriod = "AM"; // "AM" or "PM"
-  let isLive = true;
-  let activeTimerInterval = null;
-
-  function getEffectiveDayAndPeriod() {
-    const now = new Date();
-    const hour = now.getHours();
-    let day = now.getDay();
-
-    // 5:00 AM to 4:59 PM = Morning (AM)
-    // 5:00 PM to 4:59 AM = Evening (PM)
-    // If between 12:00 AM and 4:59 AM, keep it on the previous evening's routine
-    if (hour >= 5 && hour < 17) {
-      return { day, period: "AM" };
-    } else {
-      if (hour < 5) {
-        day = (day + 6) % 7;
-      }
-      return { day, period: "PM" };
-    }
-  }
-
-  function getRoutineData(dayIndex, period) {
-    const dayName = FULL_DAYS[dayIndex];
-
-    if (period === "AM") {
-      return {
-        badge: `${dayName} Morning`,
-        isBha: false,
-        title: "Daily Oil Control & Protect",
-        subtitle: "Keep skin matte, calm redness & hydrate light",
+    const ROUTINES = {
+      AM: {
+        tag: "MORNING SHIELD",
+        title: "Antioxidant & Sebum Control AM",
+        subtitle: "Internal Vitamin C + E synergy & lightweight barrier protection",
         steps: [
           {
+            id: "supp-am",
+            isSupplement: true,
+            name: "💊 Take Vitamin C + Vitamin E",
+            desc: "Eat with breakfast containing healthy fats. Vitamin C regenerates Vitamin E & boosts UV defense.",
+            badge: "⚡ Peak Absorption Time (8:00–10:00 AM)"
+          },
+          {
             id: "am-1",
-            title: "1. Wash & Pat Dry",
-            desc: "Cleanse off overnight oil and pat skin dry."
+            name: "1. Gentle Cleanser & Pat Bone-Dry",
+            desc: "Wash away overnight oil and pat gently with a clean tissue.",
+            badge: null
           },
           {
             id: "am-2",
-            title: "2. Minimalist Niacinamide 10%",
-            desc: "Apply 2–3 drops across face to slow oil output all day.",
-            timerSec: 60
+            name: "2. Minimalist Niacinamide 10%",
+            desc: "Apply 2–3 drops evenly across face to regulate daytime sebum & pores.",
+            badge: "⏱ Wait 2 mins to absorb"
           },
           {
             id: "am-3",
-            title: "3. Aloe Vera Gel (Thin Layer)",
-            desc: "Use a pea-sized amount for oil-free water hydration."
-          },
-          {
-            id: "am-4",
-            title: "4. Sunscreen (SPF 50)",
-            desc: "Essential protection, especially on days after Salicylic Acid."
+            name: "3. Aloe Vera Gel + Broad-Spectrum SPF",
+            desc: "Lock in light hydration, then seal with sunscreen before stepping out.",
+            badge: "☀️ UV Shield Required"
           }
         ]
-      };
-    }
-
-    const isBhaNight = BHA_DAYS.includes(dayIndex);
-
-    if (isBhaNight) {
-      return {
-        badge: `${dayName} Night • BHA Unclog`,
-        isBha: true,
-        title: "Pore-Clearing Night (Salicylic 2%)",
-        subtitle: "Dissolve deep pore oil & congestion • Skip Niacinamide tonight",
-        steps: [
-          {
-            id: "pm-bha-1",
-            title: "1. Wash & Pat 100% Bone-Dry",
-            desc: "Skin must be completely dry so acid doesn't sting and tape sticks."
-          },
-          {
-            id: "pm-bha-2",
-            title: "2. Hydrocolloid Tape (If Needed)",
-            desc: "Stick directly onto surfaced whiteheads FIRST. Never apply acid under tape."
-          },
-          {
-            id: "pm-bha-3",
-            title: "3. Salicylic Acid 2% Serum",
-            desc: "Apply 2–3 drops around any tape. Wait 2 mins to absorb into pores.",
-            timerSec: 120
-          },
-          {
-            id: "pm-bha-4",
-            title: "4. Aloe Vera Gel (Generous Layer)",
-            desc: "Apply a soothing layer over face (avoiding tape edges) to rehydrate."
-          }
-        ]
-      };
-    } else {
-      return {
-        badge: `${dayName} Night • Recovery`,
-        isBha: false,
-        title: "Barrier & Sebum Reset Night",
-        subtitle: "Calm acne inflammation & balance oil without over-exfoliating",
-        steps: [
-          {
-            id: "pm-rec-1",
-            title: "1. Wash & Pat 100% Bone-Dry",
-            desc: "Press a clean tissue on any oily spots so patches adhere tightly."
-          },
-          {
-            id: "pm-rec-2",
-            title: "2. Hydrocolloid Tape (If Needed)",
-            desc: "Apply onto active whiteheads first before any slippery serum."
-          },
-          {
-            id: "pm-rec-3",
-            title: "3. Minimalist Niacinamide 10%",
-            desc: "Apply 2–3 drops around any tape. Pat gently and let settle 1 min.",
-            timerSec: 60
-          },
-          {
-            id: "pm-rec-4",
-            title: "4. Aloe Vera Gel (Even Layer)",
-            desc: "Lock in water hydration overnight so oil glands stay calm."
-          }
-        ]
-      };
-    }
-  }
-
-  function getStorageKey(dayIndex, period) {
-    const now = new Date();
-    const dateKey = `${now.getFullYear()}-${now.getMonth()}-${dayIndex}-${period}`;
-    return `skincare_done_${dateKey}`;
-  }
-
-  function getCompletedMap(dayIndex, period) {
-    try {
-      return JSON.parse(localStorage.getItem(getStorageKey(dayIndex, period)) || "{}");
-    } catch {
-      return {};
-    }
-  }
-
-  function toggleStep(stepId) {
-    const key = getStorageKey(selectedDay, selectedPeriod);
-    const map = getCompletedMap(selectedDay, selectedPeriod);
-    map[stepId] = !map[stepId];
-    localStorage.setItem(key, JSON.stringify(map));
-    render();
-  }
-
-  function startCountdown(btn, seconds) {
-    if (activeTimerInterval) clearInterval(activeTimerInterval);
-    let remaining = seconds;
-    const updateLabel = () => {
-      const m = Math.floor(remaining / 60);
-      const s = String(remaining % 60).padStart(2, "0");
-      btn.textContent = `⏳ Absorbing: ${m}:${s}`;
+      },
+      PM: {
+        0: { // Sunday
+          tag: "RECOVERY",
+          title: "Barrier & Sebum Reset Night",
+          subtitle: "Calm acne inflammation & balance oil without over-exfoliating",
+          steps: [
+            {
+              id: "pm-sun-1",
+              name: "1. Wash & Pat 100% Bone-Dry",
+              desc: "Press a clean tissue on any oily spots or patches so skin stays dry.",
+              badge: null
+            },
+            {
+              id: "pm-sun-2",
+              name: "2. Hydrocolloid Tape (If Needed)",
+              desc: "Apply onto active whiteheads first before any slippery serum.",
+              badge: null
+            },
+            {
+              id: "pm-sun-3",
+              name: "3. Minimalist Niacinamide 10%",
+              desc: "Apply 2–3 drops around any tape. Pat gently and let settle.",
+              badge: "⏱ Wait 3 mins to absorb"
+            },
+            {
+              id: "pm-sun-4",
+              name: "4. Aloe Vera Gel (5mm Layer)",
+              desc: "Lock in water hydration overnight so oil glands stay calm.",
+              badge: null
+            },
+            {
+              id: "supp-pm-check",
+              isSupplement: true,
+              name: "💊 Vitamin C + E (Missed AM Check)",
+              desc: "If you skipped breakfast supplements, take them now with dinner.",
+              badge: "🔄 Backup Window"
+            }
+          ]
+        },
+        EXFOLIATE: { // Mon, Wed, Fri
+          tag: "PORE CLEAR",
+          title: "Salicylic Acid BHA Clear Night",
+          subtitle: "Unclog deep congestion & prevent new breakouts",
+          steps: [
+            {
+              id: "pm-bha-1",
+              name: "1. Cleanser & Pat 100% Bone-Dry",
+              desc: "Damp skin makes acids penetrate too fast—pat completely dry first.",
+              badge: "⏱ Wait 2 mins until dry"
+            },
+            {
+              id: "pm-bha-2",
+              name: "2. Salicylic Acid 2% (BHA)",
+              desc: "Apply 2–3 drops on T-zone and congested areas. Avoid eye corners.",
+              badge: "⏱ Wait 10 mins for BHA action"
+            },
+            {
+              id: "pm-bha-3",
+              name: "3. Soothing Aloe Vera Gel Layer",
+              desc: "Apply a generous layer to cool and hydrate post-exfoliation.",
+              badge: null
+            },
+            {
+              id: "supp-pm-check",
+              isSupplement: true,
+              name: "💊 Vitamin C + E (Missed AM Check)",
+              desc: "Confirm you took your morning Vitamin C + E dose (take with dinner if missed).",
+              badge: "🔄 Daily Check"
+            }
+          ]
+        },
+        BARRIER: { // Tue, Thu, Sat
+          tag: "BARRIER REPAIR",
+          title: "Niacinamide & Hydration Night",
+          subtitle: "Strengthen skin barrier & fade post-acne marks",
+          steps: [
+            {
+              id: "pm-bar-1",
+              name: "1. Gentle Wash & Pat Bone-Dry",
+              desc: "Remove sweat, sunscreen, and pollution thoroughly.",
+              badge: null
+            },
+            {
+              id: "pm-bar-2",
+              name: "2. Hydrocolloid Patch (If Active Spots)",
+              desc: "Stick onto clean, dry blemishes before applying serums.",
+              badge: null
+            },
+            {
+              id: "pm-bar-3",
+              name: "3. Minimalist Niacinamide 10%",
+              desc: "Apply 2–3 drops evenly to calm redness and repair barrier lipids.",
+              badge: "⏱ Wait 3 mins to absorb"
+            },
+            {
+              id: "pm-bar-4",
+              name: "4. Aloe Vera Gel Seal",
+              desc: "Smooth over face to lock in overnight moisture.",
+              badge: null
+            },
+            {
+              id: "supp-pm-check",
+              isSupplement: true,
+              name: "💊 Vitamin C + E (Missed AM Check)",
+              desc: "Confirm you took your morning Vitamin C + E dose (take with dinner if missed).",
+              badge: "🔄 Daily Check"
+            }
+          ]
+        }
+      }
     };
-    updateLabel();
-    activeTimerInterval = setInterval(() => {
-      remaining--;
-      if (remaining <= 0) {
-        clearInterval(activeTimerInterval);
-        btn.textContent = "✅ Ready for Aloe Vera Gel!";
-        if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
-      } else {
-        updateLabel();
+
+    let currentDay = new Date().getDay();
+    let currentPeriod = new Date().getHours() < 16 ? "AM" : "PM";
+    let isLiveAuto = true;
+
+    function getTodayKey() {
+      const d = new Date();
+      return `skincare_checks_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
+    }
+
+    function getSavedChecks() {
+      try {
+        return JSON.parse(localStorage.getItem(getTodayKey())) || {};
+      } catch {
+        return {};
       }
-    }, 1000);
-  }
+    }
 
-  function render() {
-    if (activeTimerInterval) clearInterval(activeTimerInterval);
+    function toggleStep(stepId) {
+      const checks = getSavedChecks();
+      checks[stepId] = !checks[stepId];
+      try {
+        localStorage.setItem(getTodayKey(), JSON.stringify(checks));
+      } catch (e) {}
+      render();
+    }
 
-    const data = getRoutineData(selectedDay, selectedPeriod);
-    const completed = getCompletedMap(selectedDay, selectedPeriod);
+    function resetChecks() {
+      try {
+        localStorage.removeItem(getTodayKey());
+      } catch (e) {}
+      render();
+    }
 
-    const badgeEl = document.getElementById("routineBadge");
-    badgeEl.textContent = data.badge;
-    badgeEl.className = "time-badge" + (data.isBha ? " bha-night" : "");
+    function enableLiveAuto() {
+      isLiveAuto = true;
+      const now = new Date();
+      currentDay = now.getDay();
+      currentPeriod = now.getHours() < 16 ? "AM" : "PM";
+      render();
+    }
 
-    document.getElementById("liveIndicator").textContent = isLive ? "Live Auto" : "Preview Mode";
-    document.getElementById("routineTitle").textContent = data.title;
-    document.getElementById("routineSubtitle").textContent = data.subtitle;
+    function setDay(dayIndex) {
+      isLiveAuto = false;
+      currentDay = dayIndex;
+      render();
+    }
 
-    const container = document.getElementById("stepsContainer");
-    container.innerHTML = "";
+    function setPeriod(period) {
+      isLiveAuto = false;
+      currentPeriod = period;
+      render();
+    }
 
-    data.steps.forEach((step) => {
-      const isDone = !!completed[step.id];
-      const row = document.createElement("div");
-      row.className = "step" + (isDone ? " completed" : "");
-      row.onclick = () => toggleStep(step.id);
+    function getRoutineData(day, period) {
+      if (period === "AM") return ROUTINES.AM;
+      if (day === 0) return ROUTINES.PM[0];
+      if (day === 1 || day === 3 || day === 5) return ROUTINES.PM.EXFOLIATE;
+      return ROUTINES.PM.BARRIER;
+    }
 
-      const box = document.createElement("div");
-      box.className = "checkbox";
-      box.textContent = isDone ? "✓" : "";
+    function render() {
+      const routine = getRoutineData(currentDay, currentPeriod);
+      const checks = getSavedChecks();
 
-      const content = document.createElement("div");
-      content.className = "step-content";
+      // Update Header
+      document.getElementById("dayBanner").textContent =
+        `${FULL_DAYS[currentDay].toUpperCase()} ${currentPeriod} • ${routine.tag}`;
+      document.getElementById("routineTitle").textContent = routine.title;
+      document.getElementById("routineSubtitle").textContent = routine.subtitle;
 
-      const title = document.createElement("div");
-      title.className = "step-title";
-      title.textContent = step.title;
+      const liveBtn = document.getElementById("liveAutoBtn");
+      liveBtn.classList.toggle("active", isLiveAuto);
 
-      const desc = document.createElement("div");
-      desc.className = "step-desc";
-      desc.textContent = step.desc;
+      // Render Steps
+      const container = document.getElementById("stepsContainer");
+      container.innerHTML = "";
 
-      content.appendChild(title);
-      content.appendChild(desc);
+      routine.steps.forEach((step) => {
+        const isDone = !!checks[step.id];
+        const row = document.createElement("div");
+        row.className = `step-row ${step.isSupplement ? "supplement-row" : ""} ${isDone ? "completed" : ""}`;
+        row.onclick = () => toggleStep(step.id);
 
-      if (step.timerSec) {
-        const tBtn = document.createElement("button");
-        tBtn.className = "timer-btn";
-        const mins = step.timerSec / 60;
-        tBtn.textContent = `⏱ Start ${mins}-Min Wait Timer`;
-        tBtn.onclick = (e) => {
-          e.stopPropagation();
-          startCountdown(tBtn, step.timerSec);
-        };
-        content.appendChild(tBtn);
-      }
+        row.innerHTML = `
+          <div class="check-box">${isDone ? "✓" : ""}</div>
+          <div class="step-info">
+            <div class="step-name">${step.name}</div>
+            <div class="step-desc">${step.desc}</div>
+            ${step.badge ? `<div class="badge-row"><span class="amber-badge">${step.badge}</span></div>` : ""}
+          </div>
+        `;
+        container.appendChild(row);
+      });
 
-      row.appendChild(box);
-      row.appendChild(content);
-      container.appendChild(row);
-    });
+      // Render Footer Day Buttons
+      const daysNav = document.getElementById("daysNav");
+      daysNav.innerHTML = "";
+      DAYS.forEach((dayName, idx) => {
+        const btn = document.createElement("button");
+        btn.className = `day-btn ${idx === currentDay ? "active" : ""}`;
+        btn.textContent = dayName;
+        btn.onclick = () => setDay(idx);
+        daysNav.appendChild(btn);
+      });
 
-    // Day pills
-    const pillsContainer = document.getElementById("dayPills");
-    pillsContainer.innerHTML = "";
-    DAYS.forEach((d, idx) => {
-      const btn = document.createElement("button");
-      btn.className = "pill" + (idx === selectedDay ? " active" : "");
-      btn.textContent = d;
-      btn.onclick = () => {
-        isLive = false;
-        selectedDay = idx;
+      // Update AM/PM Toggle
+      document.getElementById("amBtn").classList.toggle("active", currentPeriod === "AM");
+      document.getElementById("pmBtn").classList.toggle("active", currentPeriod === "PM");
+    }
+
+    // Auto-refresh time check every minute when in Live Auto mode
+    setInterval(() => {
+      if (isLiveAuto) {
+        const now = new Date();
+        currentDay = now.getDay();
+        currentPeriod = now.getHours() < 16 ? "AM" : "PM";
         render();
-      };
-      pillsContainer.appendChild(btn);
-    });
+      }
+    }, 60000);
 
-    document.getElementById("amBtn").className = "ampm-btn" + (selectedPeriod === "AM" ? " active" : "");
-    document.getElementById("pmBtn").className = "ampm-btn" + (selectedPeriod === "PM" ? " active" : "");
-  }
-
-  function syncToLiveClock() {
-    const live = getEffectiveDayAndPeriod();
-    selectedDay = live.day;
-    selectedPeriod = live.period;
-    isLive = true;
     render();
-  }
-
-  document.getElementById("amBtn").onclick = () => {
-    isLive = false;
-    selectedPeriod = "AM";
-    render();
-  };
-
-  document.getElementById("pmBtn").onclick = () => {
-    isLive = false;
-    selectedPeriod = "PM";
-    render();
-  };
-
-  document.getElementById("syncNowBtn").onclick = syncToLiveClock;
-
-  // Auto-refresh when waking phone or every 60 seconds if in Live mode
-  setInterval(() => {
-    if (isLive) syncToLiveClock();
-  }, 60000);
-
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden && isLive) syncToLiveClock();
-  });
-
-  syncToLiveClock();
-</script>
+  </script>
 </body>
 </html>
